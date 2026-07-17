@@ -1,0 +1,180 @@
+/* ==========================================================================
+   CleanLink AI — theme
+   Palette: green (primary), white, dark gray (text), light gray (surfaces)
+   ========================================================================== */
+
+:root {
+    --color-primary: #1F7A4D;
+    --color-primary-dark: #16613C;
+    --color-text: #1E2328;
+    --color-text-muted: #667085;
+    --color-surface: #FAFAFA;
+    --color-border: #E5E7EB;
+    --color-danger: #B42318;
+    --color-danger-bg: #FEF3F2;
+    --color-warning: #B54708;
+    --color-warning-bg: #FFFAEB;
+    --color-success-bg: #ECFDF3;
+}
+
+/* ---- base ---------------------------------------------------------- */
+
+.stApp {
+    background-color: #FFFFFF;
+    color: var(--color-text);
+}
+
+.block-container {
+    padding-top: 2.5rem;
+    padding-bottom: 3rem;
+}
+
+html, body, [class*="css"] {
+    font-family: -apple-system, "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4 {
+    color: var(--color-text) !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em;
+}
+
+.app-title {
+    font-size: 2rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    line-height: 1.2;
+}
+
+.app-subtitle {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    font-weight: 450;
+    margin-top: 0.2rem;
+}
+
+.app-powered-by {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    margin-top: 0.55rem;
+    letter-spacing: 0.01em;
+}
+
+.section-label {
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.65rem;
+}
+
+/* ---- buttons -------------------------------------------------------- */
+
+div.stButton > button:first-child {
+    background-color: var(--color-primary) !important;
+    color: #FFFFFF !important;
+    border-radius: 8px !important;
+    border: none !important;
+    padding: 0.6rem 1.5rem !important;
+    font-weight: 500 !important;
+    transition: background-color 0.15s ease;
+}
+
+div.stButton > button:first-child:hover {
+    background-color: var(--color-primary-dark) !important;
+}
+
+div.stDownloadButton > button:first-child {
+    background-color: #FFFFFF !important;
+    color: var(--color-text) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+}
+
+div.stDownloadButton > button:first-child:hover {
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
+}
+
+/* ---- surfaces / cards ------------------------------------------------ */
+
+.panel {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.5rem 1.6rem;
+}
+
+.panel + .panel {
+    margin-top: 0.85rem;
+}
+
+.empty-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    border: 1px dashed var(--color-border);
+    border-radius: 12px;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.stat-value {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.stat-label {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+}
+
+/* ---- badges ----------------------------------------------------------- */
+
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-low {
+    background-color: var(--color-success-bg);
+    color: var(--color-primary-dark);
+}
+
+.badge-medium {
+    background-color: var(--color-warning-bg);
+    color: var(--color-warning);
+}
+
+.badge-high, .badge-immediate {
+    background-color: var(--color-danger-bg);
+    color: var(--color-danger);
+}
+
+/* ---- report card ------------------------------------------------------ */
+
+.report-panel {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-primary);
+    border-radius: 12px;
+    padding: 1.6rem 1.7rem;
+}
+
+.report-panel p {
+    color: var(--color-text);
+    line-height: 1.55;
+}
