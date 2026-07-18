@@ -28,20 +28,65 @@ def init_session_state() -> None:
 
 
 def render_header() -> None:
-    st.markdown("<div class='app-title'>CleanLink AI</div>", unsafe_allow_html=True)
-    st.markdown("<div class='app-subtitle'>Environmental Waste Assessment</div>", unsafe_allow_html=True)
-    st.markdown("<div class='app-powered-by'>Powered by Google Gemma</div>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class='app-header'>
+          <div class='app-header-left'>
+            <div class='app-title'>CleanLink AI</div>
+            <div class='app-subtitle'>Environmental Waste Intelligence Platform</div>
+            <div class='app-powered-by'>Powered by Google Gemma</div>
+          </div>
+          <div class='app-header-right'>
+            <span class='badge badge-primary'>Gemma 4</span>
+            <span class='badge badge-primary'>AI Powered</span>
+            <span class='badge badge-neutral'>Version 1.0</span>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_hero() -> None:
+    st.markdown(
+        """
+        <div class='hero-section'>
+          <h1>Environmental Waste Assessment</h1>
+          <div class='hero-subtitle'>
+            Upload a photo of a waste site to get an AI-generated severity, priority,
+            and municipal-ready report.
+          </div>
+          <div class='capability-grid'>
+            <div class='capability-card'>
+              <div class='capability-title'>AI Powered</div>
+              <div class='capability-desc'>Google Gemma 4 Vision</div>
+            </div>
+            <div class='capability-card'>
+              <div class='capability-title'>Computer Vision</div>
+              <div class='capability-desc'>Structured Reports</div>
+            </div>
+            <div class='capability-card'>
+              <div class='capability-title'>Municipal Ready</div>
+              <div class='capability-desc'>Priority Detection</div>
+            </div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_settings(env_api_key: str | None) -> str | None:
-    with st.expander("Settings", expanded=not env_api_key):
-        api_key = st.text_input(
-            "Google AI Studio API key",
-            type="password",
-            value=env_api_key or "",
-            placeholder="AIzaSy...",
-        )
-        st.caption("Get a free key at [Google AI Studio](https://aistudio.google.com/).")
+    with st.container(key="settings-card"):
+        st.markdown("<div class='section-title'>Application Settings</div>", unsafe_allow_html=True)
+        with st.expander("Settings", expanded=not env_api_key):
+            api_key = st.text_input(
+                "Google AI Studio API key",
+                type="password",
+                value=env_api_key or "",
+                placeholder="AIzaSy...",
+            )
+            st.caption("Get a free key at [Google AI Studio](https://aistudio.google.com/).")
 
     return api_key
 
@@ -160,62 +205,68 @@ Agency Report
 
 
 def render_assessment(result: dict) -> None:
-    st.markdown("<div class='section-label'>Assessment</div>", unsafe_allow_html=True)
-    c1, c2, c3, c4 = st.columns(4)
+    st.markdown("<div class='section-title'>Assessment</div>", unsafe_allow_html=True)
+    with st.container(key="stats-grid"):
+        c1, c2, c3, c4 = st.columns(4)
 
-    with c1:
-        st.markdown(
-            f"<div class='panel'><div class='stat-label'>Waste type</div>"
-            f"<div class='stat-value'>{result.get('waste_type', 'Unknown')}</div></div>",
-            unsafe_allow_html=True,
-        )
-    with c2:
-        st.markdown(
-            f"<div class='panel'><div class='stat-label'>Severity</div>"
-            f"{badge_html(result.get('severity'), SEVERITY_LEVELS)}</div>",
-            unsafe_allow_html=True,
-        )
-    with c3:
-        st.markdown(
-            f"<div class='panel'><div class='stat-label'>Priority</div>"
-            f"{badge_html(result.get('priority'), PRIORITY_LEVELS)}</div>",
-            unsafe_allow_html=True,
-        )
-    with c4:
-        confidence = result.get("confidence_score", 85)
-        st.markdown(
-            f"<div class='panel'><div class='stat-label'>Confidence</div>"
-            f"<div class='stat-value'>{confidence}%</div></div>",
-            unsafe_allow_html=True,
-        )
+        with c1:
+            st.markdown(
+                f"<div class='metric-card'><div class='stat-label'>Waste type</div>"
+                f"<div class='stat-value'>{result.get('waste_type', 'Unknown')}</div></div>",
+                unsafe_allow_html=True,
+            )
+        with c2:
+            st.markdown(
+                f"<div class='metric-card'><div class='stat-label'>Severity</div>"
+                f"{badge_html(result.get('severity'), SEVERITY_LEVELS)}</div>",
+                unsafe_allow_html=True,
+            )
+        with c3:
+            st.markdown(
+                f"<div class='metric-card'><div class='stat-label'>Priority</div>"
+                f"{badge_html(result.get('priority'), PRIORITY_LEVELS)}</div>",
+                unsafe_allow_html=True,
+            )
+        with c4:
+            confidence = result.get("confidence_score", 85)
+            st.markdown(
+                f"<div class='metric-card'><div class='stat-label'>Confidence</div>"
+                f"<div class='stat-value'>{confidence}%</div></div>",
+                unsafe_allow_html=True,
+            )
 
 
 def render_risks_and_action(result: dict) -> None:
-    risk_col, action_col = st.columns(2)
+    with st.container(key="insights-grid"):
+        risk_col, action_col = st.columns(2)
 
-    with risk_col:
-        st.markdown("<div class='section-label'>Environmental Risks</div>", unsafe_allow_html=True)
-        risks = result.get("health_risks", [])
-        if risks:
+        with risk_col:
+            st.markdown("<div class='section-title'>Environmental Risks</div>", unsafe_allow_html=True)
+            risks = result.get("health_risks", [])
+            if risks:
+                items = "".join(f"<div class='risk-item'>{risk}</div>" for risk in risks)
+                st.markdown(f"<div class='risk-card'>{items}</div>", unsafe_allow_html=True)
+            else:
+                st.markdown(
+                    "<div class='risk-card'><div class='risk-item'>No significant risks flagged.</div></div>",
+                    unsafe_allow_html=True,
+                )
+
+        with action_col:
+            st.markdown("<div class='section-title'>Recommended Action</div>", unsafe_allow_html=True)
             st.markdown(
-                "<div class='panel'>" + "".join(f"<p>{risk}</p>" for risk in risks) + "</div>",
+                f"<div class='action-card'>"
+                f"<div class='action-title'>Recommended Action</div>"
+                f"<div class='action-body'>{result.get('action', 'Standard monitoring and cleanup protocol.')}</div>"
+                f"</div>",
                 unsafe_allow_html=True,
             )
-        else:
-            st.markdown("<div class='panel'>No significant risks flagged.</div>", unsafe_allow_html=True)
-
-    with action_col:
-        st.markdown("<div class='section-label'>Recommended Action</div>", unsafe_allow_html=True)
-        st.markdown(
-            f"<div class='panel'>{result.get('action', 'Standard monitoring and cleanup protocol.')}</div>",
-            unsafe_allow_html=True,
-        )
 
 
 def render_agency_report(result: dict) -> None:
-    st.markdown("<div class='section-label'>Agency Report</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-title'>Agency Report</div>", unsafe_allow_html=True)
     st.markdown(
-        f"<div class='report-panel'><p>{result.get('report', 'No report generated.')}</p></div>",
+        f"<div class='report-card'><p>{result.get('report', 'No report generated.')}</p></div>",
         unsafe_allow_html=True,
     )
 
@@ -224,48 +275,86 @@ def spacer(height_rem: float = 2.0) -> None:
     st.markdown(f"<div style='height:{height_rem}rem'></div>", unsafe_allow_html=True)
 
 
+def render_download(result: dict, location: str | None) -> None:
+    with st.container(key="download-section"):
+        st.markdown("<div class='section-title'>Export Report</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='section-subtitle'>Download the generated assessment.</div>",
+            unsafe_allow_html=True,
+        )
+        st.download_button(
+            label="Download Report",
+            data=generate_report(result, location),
+            file_name="cleanlink-waste-report.txt",
+            mime="text/plain",
+            use_container_width=True,
+        )
+
+
 def render_results(result: dict, location: str | None) -> None:
     st.divider()
-    render_assessment(result)
-    spacer()
-    render_risks_and_action(result)
-    spacer()
-    render_agency_report(result)
+    with st.container(key="results-section"):
+        render_assessment(result)
+        spacer()
+        render_risks_and_action(result)
+        spacer()
+        render_agency_report(result)
 
     spacer(1.5)
-    st.download_button(
-        label="Download Report",
-        data=generate_report(result, location),
-        file_name="cleanlink-waste-report.txt",
-        mime="text/plain",
-        use_container_width=True,
-    )
+    render_download(result, location)
 
 
 def render_upload_form() -> tuple:
-    left, right = st.columns([1, 1], gap="large")
+    with st.container(key="workspace"):
+        left, right = st.columns([1, 1], gap="large")
 
-    with left:
-        st.markdown("<div class='section-label'>Upload</div>", unsafe_allow_html=True)
-        uploaded_file = st.file_uploader("Waste image", type=["jpg", "jpeg", "png", "webp"])
-        location = st.text_input("Location (optional)", placeholder="e.g. Sabo Market, Ogbomoso")
-        analyze_clicked = st.button("Analyze Waste", use_container_width=True)
+        with left:
+            with st.container(key="upload-card"):
+                st.markdown("<div class='section-title'>Upload Waste Image</div>", unsafe_allow_html=True)
+                st.markdown(
+                    "<div class='section-subtitle'>Upload a photo for AI analysis.</div>",
+                    unsafe_allow_html=True,
+                )
+                uploaded_file = st.file_uploader("Waste image", type=["jpg", "jpeg", "png", "webp"])
+                location = st.text_input("Location (optional)", placeholder="e.g. Sabo Market, Ogbomoso")
+                st.markdown(
+                    "<div class='field-helper-text'>Location improves report context.</div>",
+                    unsafe_allow_html=True,
+                )
+                analyze_clicked = st.button("Analyze Waste", use_container_width=True)
 
-    with right:
-        st.markdown("<div class='section-label'>Preview</div>", unsafe_allow_html=True)
-        if uploaded_file is not None:
-            try:
-                preview = Image.open(uploaded_file)
-                st.image(preview, use_container_width=True)
-            except Exception:
-                st.error("Could not load this image. Try a different file.")
-        else:
-            st.markdown(
-                "<div class='empty-preview'>Upload an image to preview it here</div>",
-                unsafe_allow_html=True,
-            )
+        with right:
+            with st.container(key="preview-card"):
+                st.markdown("<div class='section-title'>Image Preview</div>", unsafe_allow_html=True)
+                if uploaded_file is not None:
+                    try:
+                        preview = Image.open(uploaded_file)
+                        st.image(preview, use_container_width=True)
+                    except Exception:
+                        st.error("Could not load this image. Try a different file.")
+                else:
+                    st.markdown(
+                        "<div class='empty-preview'>"
+                        "<div class='empty-icon'>🖼️</div>"
+                        "<div class='empty-title'>No image uploaded</div>"
+                        "<div class='empty-subtitle'>Upload an image to preview it here.</div>"
+                        "</div>",
+                        unsafe_allow_html=True,
+                    )
 
     return uploaded_file, location, analyze_clicked
+
+
+def render_footer() -> None:
+    st.markdown(
+        """
+        <div class='app-footer'>
+          <div class='footer-line'>CleanLink AI — Environmental Waste Intelligence Platform</div>
+          <div class='footer-line'>Powered by Google Gemma 4 · Version 1.0</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def handle_analysis(uploaded_file, location: str, api_key: str | None) -> None:
@@ -300,6 +389,8 @@ def main() -> None:
 
     render_header()
     spacer(1.5)
+    render_hero()
+    spacer(0.5)
     api_key = render_settings(env_api_key)
     spacer(0.5)
     st.divider()
@@ -312,6 +403,9 @@ def main() -> None:
 
     if st.session_state.analysis_result is not None:
         render_results(st.session_state.analysis_result, st.session_state.analyzed_location)
+
+    spacer(1.5)
+    render_footer()
 
 
 if __name__ == "__main__":
