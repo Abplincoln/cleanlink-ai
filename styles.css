@@ -1,63 +1,79 @@
 /* ==========================================================================
-   CleanLink AI — Minimal Theme (v2)
+   CleanLink AI — Environmental Waste Intelligence Platform
+   Production Theme v3 — Government / Municipal Dashboard Grade
    ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   1. DESIGN TOKENS
+   -------------------------------------------------------------------------- */
 :root{
   /* Brand */
-  --primary:        #10714A;
-  --primary-hover:  #0C5A3B;
-  --primary-soft:   rgba(16,113,74,.08);
-  --primary-ring:   rgba(16,113,74,.18);
+  --primary:        #1F7A4D;
+  --primary-hover:  #16613C;
+  --primary-soft:   rgba(31,122,77,.08);
+  --primary-ring:   rgba(31,122,77,.18);
 
   /* Text */
-  --text:           #0F172A;
-  --text-soft:      #334155;
-  --muted:          #64748B;
+  --text:           #1F2937;
+  --text-soft:      #374151;
+  --muted:          #6B7280;
 
   /* Surfaces */
-  --bg:             #FBFBFA;
+  --bg:             #F8FAF9;
   --surface:        #FFFFFF;
   --surface-2:      #F5F6F7;
   --surface-3:      #EEF0F2;
 
   /* Lines */
-  --border:         #E6E8EB;
+  --border:         #E5E7EB;
   --border-strong:  #D4D8DD;
 
   /* Status */
   --danger:         #DC2626;
-  --warning:        #B45309;
-  --success:        #15803D;
+  --danger-soft:    rgba(220,38,38,.08);
+  --warning:        #D97706;
+  --warning-soft:   rgba(217,119,6,.08);
+  --success:        #16A34A;
+  --success-soft:   rgba(22,163,74,.08);
 
   /* Shape */
   --radius-sm: 8px;
   --radius:    12px;
   --radius-lg: 16px;
 
+  /* Layout */
+  --content-max: 1300px;
+
   /* Motion */
   --ease: cubic-bezier(.2,.7,.2,1);
+
+  /* Shadows — very subtle, no drama */
+  --shadow-sm: 0 1px 2px rgba(15,23,42,.04);
+  --shadow-md: 0 4px 16px rgba(15,23,42,.06);
 }
 
 /* --------------------------------------------------------------------------
-   Base
+   2. BASE
    -------------------------------------------------------------------------- */
 html, body, .stApp,
 [data-testid="stAppViewContainer"]{
   background: var(--bg) !important;
   color: var(--text);
-  font-family: "Inter", "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 [data-testid="block-container"]{
-  max-width: 980px;
-  padding-top: 56px;
-  padding-bottom: 72px;
+  max-width: var(--content-max);
+  padding-top: 48px;
+  padding-bottom: 80px;
 }
 
+p, li, span, label{ color: var(--text-soft); }
+
 /* --------------------------------------------------------------------------
-   Typography
+   3. TYPOGRAPHY
    -------------------------------------------------------------------------- */
 h1,h2,h3,h4,h5{
   color: var(--text) !important;
@@ -70,40 +86,218 @@ h1{ font-size: 2.15rem !important; }
 h2{ font-size: 1.5rem  !important; }
 h3{ font-size: 1.15rem !important; }
 
-.app-title{
-  font-size: 2.4rem;
+/* Section titles — used above workspace panels (e.g. "Upload", "Preview") */
+.section-title{
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.section-subtitle{
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.small-label{
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   4. APP HEADER
+   -------------------------------------------------------------------------- */
+.app-header{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.app-header-left .app-title{
+  font-size: 32px;
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--text);
-  margin-bottom: .35rem;
+  margin: 0 0 4px 0;
 }
 
-.app-subtitle{
-  color: var(--muted);
-  font-size: 1.02rem;
-  line-height: 1.55;
-}
-
-.app-powered-by{
-  color: var(--muted);
-  font-size: .8rem;
-  margin-top: 12px;
-  letter-spacing: .01em;
-}
-
-.section-label{
-  font-size: .72rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: .12em;
+.app-header-left .app-eyebrow{
+  font-size: 13px;
   font-weight: 600;
-  margin-bottom: 14px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin: 0 0 8px 0;
 }
 
-p, li, span, label{ color: var(--text-soft); }
+.app-header-left .app-description{
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.55;
+  max-width: 520px;
+  margin: 0;
+}
+
+.app-header-right{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-top: 6px;
+}
 
 /* --------------------------------------------------------------------------
-   Inputs
+   5. BADGES / PILLS
+   -------------------------------------------------------------------------- */
+.badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+
+.badge-primary{
+  background: var(--primary-soft);
+  border-color: rgba(31,122,77,.20);
+  color: var(--primary);
+}
+
+.badge-neutral{
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--muted);
+}
+
+/* Result badges — driven by badge_html() in app.py, values: low/medium/high/immediate */
+.badge-low{
+  background: var(--success-soft);
+  border-color: rgba(22,163,74,.20);
+  color: var(--success);
+}
+
+.badge-medium{
+  background: var(--warning-soft);
+  border-color: rgba(217,119,6,.20);
+  color: var(--warning);
+}
+
+.badge-high{
+  background: var(--danger-soft);
+  border-color: rgba(220,38,38,.20);
+  color: var(--danger);
+}
+
+.badge-immediate{
+  background: var(--danger-soft);
+  border-color: rgba(220,38,38,.35);
+  color: var(--danger);
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   6. HERO
+   -------------------------------------------------------------------------- */
+.hero-section{
+  padding: 8px 0 40px 0;
+}
+
+.hero-section h1{
+  font-size: 42px !important;
+  margin-bottom: 10px;
+}
+
+.hero-section .hero-subtitle{
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 640px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.capability-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.capability-card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.capability-card .capability-title{
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.capability-card .capability-desc{
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   7. WORKSPACE / CARDS
+   -------------------------------------------------------------------------- */
+/* .st-key-* selectors target containers created via st.container(key="...")
+   in app.py — this is how real (non-sibling) wrapping is achieved in
+   Streamlit without touching component internals. */
+
+.st-key-workspace [data-testid="stHorizontalBlock"]{
+  gap: 24px;
+}
+
+.card,
+.st-key-upload-card > div,
+.st-key-preview-card > div,
+.st-key-settings-card > div{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.st-key-upload-card > div,
+.st-key-preview-card > div{
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.st-key-settings-card{
+  margin: 8px 0 24px 0;
+}
+
+.st-key-settings-card [data-testid="stExpander"]{
+  margin-top: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   8. UPLOAD PANEL / FORM
    -------------------------------------------------------------------------- */
 .stTextInput input,
 .stTextArea textarea,
@@ -146,9 +340,14 @@ p, li, span, label{ color: var(--text-soft); }
   font-size: .9rem !important;
 }
 
-/* --------------------------------------------------------------------------
-   File uploader
-   -------------------------------------------------------------------------- */
+.field-helper-text{
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: -14px;
+  margin-bottom: 18px;
+}
+
+/* File uploader */
 [data-testid="stFileUploader"]{
   border: 1px dashed var(--border-strong);
   border-radius: var(--radius);
@@ -166,26 +365,62 @@ p, li, span, label{ color: var(--text-soft); }
 [data-testid="stFileUploader"] small{ color: var(--muted) !important; }
 
 /* --------------------------------------------------------------------------
-   Buttons
+   9. EMPTY STATE (preview placeholder)
+   -------------------------------------------------------------------------- */
+.empty-preview{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--muted);
+}
+
+.empty-preview .empty-icon{
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  color: var(--border-strong);
+}
+
+.empty-preview .empty-title{
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.empty-preview .empty-subtitle{
+  font-size: 13.5px;
+  color: var(--muted);
+  max-width: 260px;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   10. BUTTONS
    -------------------------------------------------------------------------- */
 .stButton button{
   background: var(--primary) !important;
   color: #fff !important;
   border: 1px solid var(--primary) !important;
   border-radius: var(--radius-sm) !important;
-  height: 44px;
+  width: 100%;
+  height: 46px;
   padding: 0 20px;
   font-weight: 600;
   font-size: .95rem;
   letter-spacing: .01em;
-  box-shadow: 0 1px 2px rgba(15,23,42,.04);
+  box-shadow: var(--shadow-sm);
   transition: background .15s var(--ease), transform .12s var(--ease), box-shadow .15s var(--ease);
 }
 
 .stButton button:hover{
   background: var(--primary-hover) !important;
   border-color: var(--primary-hover) !important;
-  box-shadow: 0 4px 14px rgba(16,113,74,.18);
+  box-shadow: 0 4px 14px rgba(31,122,77,.18);
 }
 
 .stButton button:active{ transform: translateY(1px); }
@@ -200,8 +435,11 @@ p, li, span, label{ color: var(--text-soft); }
   color: var(--text) !important;
   border: 1px solid var(--border) !important;
   border-radius: var(--radius-sm) !important;
-  height: 44px;
-  font-weight: 500;
+  height: 48px;
+  min-width: 260px;
+  font-weight: 600;
+  margin: 0 auto;
+  display: block;
 }
 
 .stDownloadButton button:hover{
@@ -211,7 +449,7 @@ p, li, span, label{ color: var(--text-soft); }
 }
 
 /* --------------------------------------------------------------------------
-   Images
+   11. IMAGES
    -------------------------------------------------------------------------- */
 img{
   border-radius: var(--radius);
@@ -219,49 +457,46 @@ img{
 }
 
 /* --------------------------------------------------------------------------
-   Expanders
+   12. STATS GRID (results)
    -------------------------------------------------------------------------- */
-.streamlit-expanderHeader,
-[data-testid="stExpander"] summary{
-  font-weight: 600;
-  color: var(--text) !important;
-  border-radius: var(--radius-sm);
+.st-key-stats-grid [data-testid="stHorizontalBlock"]{
+  gap: 16px;
 }
 
-[data-testid="stExpander"]{
-  border: 1px solid var(--border) !important;
-  border-radius: var(--radius) !important;
+.metric-card{
   background: var(--surface);
-  box-shadow: none !important;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color .15s var(--ease), transform .15s var(--ease);
+  height: 100%;
 }
 
-/* --------------------------------------------------------------------------
-   Divider
-   -------------------------------------------------------------------------- */
-hr{
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 2.25rem 0;
+.metric-card:hover{
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
 }
 
-/* --------------------------------------------------------------------------
-   Alerts
-   -------------------------------------------------------------------------- */
-.stSuccess, .stInfo, .stWarning, .stError{
-  border-radius: var(--radius) !important;
-  border: 1px solid var(--border) !important;
-  box-shadow: none !important;
-  padding: 14px 16px !important;
+.metric-card .stat-label{
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 8px;
 }
 
-.stSuccess{ background: rgba(21,128,61,.06) !important;  border-color: rgba(21,128,61,.20) !important; }
-.stInfo   { background: var(--primary-soft) !important;  border-color: rgba(16,113,74,.20) !important; }
-.stWarning{ background: rgba(180,83,9,.06) !important;   border-color: rgba(180,83,9,.20)  !important; }
-.stError  { background: rgba(220,38,38,.06) !important;  border-color: rgba(220,38,38,.20) !important; }
+.metric-card .stat-value{
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
 
-/* --------------------------------------------------------------------------
-   Metric Cards
-   -------------------------------------------------------------------------- */
+.metric-card .badge{ margin-top: 2px; }
+
+/* Streamlit native metric fallback */
 [data-testid="metric-container"]{
   background: var(--surface);
   border: 1px solid var(--border);
@@ -291,7 +526,140 @@ hr{
 }
 
 /* --------------------------------------------------------------------------
-   Tables
+   13. ENVIRONMENTAL RISK CHIPS
+   -------------------------------------------------------------------------- */
+.st-key-insights-grid [data-testid="stHorizontalBlock"]{
+  gap: 24px;
+}
+
+.risk-card{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.risk-item{
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  background: var(--surface);
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   14. ACTION CARD
+   -------------------------------------------------------------------------- */
+.action-card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  margin: 24px 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.action-card .action-title{
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.action-card .action-body{
+  font-size: 14.5px;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   15. REPORT CARD
+   -------------------------------------------------------------------------- */
+.report-card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin: 24px 0;
+  box-shadow: var(--shadow-sm);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+
+.report-card h1, .report-card h2, .report-card h3{
+  margin-top: 1.4em;
+}
+
+.report-card h1:first-child,
+.report-card h2:first-child,
+.report-card h3:first-child{
+  margin-top: 0;
+}
+
+.st-key-results-section{
+  margin: 8px 0;
+}
+
+.st-key-download-section > div{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.st-key-download-section .section-title,
+.st-key-download-section .section-subtitle{
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   16. EXPANDERS
+   -------------------------------------------------------------------------- */
+.streamlit-expanderHeader,
+[data-testid="stExpander"] summary{
+  font-weight: 600;
+  color: var(--text) !important;
+  border-radius: var(--radius-sm);
+}
+
+[data-testid="stExpander"]{
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  background: var(--surface);
+  box-shadow: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   17. DIVIDER
+   -------------------------------------------------------------------------- */
+hr{
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.25rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   18. ALERTS
+   -------------------------------------------------------------------------- */
+.stSuccess, .stInfo, .stWarning, .stError{
+  border-radius: var(--radius) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+  padding: 14px 16px !important;
+}
+
+.stSuccess{ background: var(--success-soft) !important;  border-color: rgba(22,163,74,.20) !important; }
+.stInfo   { background: var(--primary-soft) !important;  border-color: rgba(31,122,77,.20) !important; }
+.stWarning{ background: var(--warning-soft) !important;  border-color: rgba(217,119,6,.20) !important; }
+.stError  { background: var(--danger-soft)  !important;  border-color: rgba(220,38,38,.20) !important; }
+
+/* --------------------------------------------------------------------------
+   19. TABLES
    -------------------------------------------------------------------------- */
 table{
   border-collapse: collapse;
@@ -315,7 +683,7 @@ td, th{
 tr:hover td{ background: var(--surface-2); }
 
 /* --------------------------------------------------------------------------
-   Sidebar
+   20. SIDEBAR
    -------------------------------------------------------------------------- */
 [data-testid="stSidebar"]{
   background: var(--surface);
@@ -328,7 +696,7 @@ tr:hover td{ background: var(--surface-2); }
 [data-testid="stSidebar"] h3{ color: var(--text) !important; }
 
 /* --------------------------------------------------------------------------
-   Tabs
+   21. TABS
    -------------------------------------------------------------------------- */
 .stTabs [data-baseweb="tab-list"]{
   gap: 4px;
@@ -349,7 +717,23 @@ tr:hover td{ background: var(--surface-2); }
 }
 
 /* --------------------------------------------------------------------------
-   Scrollbar
+   22. FOOTER
+   -------------------------------------------------------------------------- */
+.app-footer{
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.app-footer .footer-line{
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* --------------------------------------------------------------------------
+   23. SCROLLBAR
    -------------------------------------------------------------------------- */
 ::-webkit-scrollbar{ width: 10px; height: 10px; }
 ::-webkit-scrollbar-track{ background: transparent; }
@@ -361,10 +745,21 @@ tr:hover td{ background: var(--surface-2); }
 ::-webkit-scrollbar-thumb:hover{ background: #B9BEC5; }
 
 /* --------------------------------------------------------------------------
-   Focus ring (accessibility)
+   24. ACCESSIBILITY — FOCUS RING
    -------------------------------------------------------------------------- */
 :focus-visible{
   outline: none;
   box-shadow: 0 0 0 4px var(--primary-ring);
   border-radius: var(--radius-sm);
+}
+
+/* --------------------------------------------------------------------------
+   25. RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px){
+  .workspace{ grid-template-columns: 1fr; }
+  .capability-grid{ grid-template-columns: 1fr; }
+  .stats-grid{ grid-template-columns: repeat(2, 1fr); }
+  .app-header{ flex-direction: column; }
+  .app-header-right{ justify-content: flex-start; }
 }
